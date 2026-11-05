@@ -1,0 +1,5 @@
+{
+  "_comment": "Official NSE/BSE trading holidays (YYYY-MM-DD). Populate from the exchange circular for each calendar year before going live. Left empty intentionally: do not guess dates.",
+  "source": "https://www.nseindia.com/resources/exchange-communication-holidays",
+  "dates": []
+}
