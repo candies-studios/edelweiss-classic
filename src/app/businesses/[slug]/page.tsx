@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { businesses } from "@/content/site";
 import { Arrow, External, PageHero, Section, SmartLink, SourceNote } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export function generateStaticParams() {
   return businesses.map((b) => ({ slug: b.slug }));
@@ -24,7 +25,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
-      <PageHero eyebrow="Our businesses" title={b.name} intro={b.summary} crumbs={[{ label: "Our Businesses", href: "/businesses" }, { label: b.name, href: `/businesses/${b.slug}` }]} />
+      <PageHero image={heroImages.business[b.slug]} eyebrow="Our businesses" title={b.name} intro={b.summary} crumbs={[{ label: "Our Businesses", href: "/businesses" }, { label: b.name, href: `/businesses/${b.slug}` }]} />
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-12">
@@ -40,7 +41,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ slug:
               ))}
             </div>
           </div>
-          <div className="relative min-h-[320px] bg-silver-200 lg:col-span-5 lg:col-start-8">
+          <div className="relative min-h-[320px] bg-blue-100 lg:col-span-5 lg:col-start-8">
             <Image src={b.image} alt="" fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover" priority />
           </div>
         </div>
@@ -68,7 +69,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ slug:
               {b.facts.map((f) => (
                 <div key={f.label} className="border-t border-navy pt-6">
                   <dt className="sr-only">{f.label}</dt>
-                  <dd className="font-display text-[52px] font-light leading-none text-navy">{f.value}</dd>
+                  <dd className="font-display text-[56px] leading-none tracking-tight text-blue tabular-nums">{f.value}</dd>
                   <dd className="mt-3 text-ink-soft">{f.label}</dd>
                 </div>
               ))}

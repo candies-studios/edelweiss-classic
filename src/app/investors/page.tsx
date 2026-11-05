@@ -3,6 +3,7 @@ import Link from "next/link";
 import { company, investorDocs, irLinks } from "@/content/site";
 import { DocLibrary } from "@/components/investors/DocLibrary";
 import { Arrow, ArrowLink, PageHero, Section, SmartLink } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Investor Relations",
@@ -22,7 +23,7 @@ const hubs = [
 export default function Investors() {
   return (
     <>
-      <PageHero eyebrow="Investor relations" title="Information for shareholders and investors" intro="Results, reports, disclosures and governance information for Edelweiss Financial Services Limited." crumbs={[{ label: "Investors", href: "/investors" }]} />
+      <PageHero image={heroImages.investors} eyebrow="Investor relations" title="Information for shareholders and investors" intro="Results, reports, disclosures and governance information for Edelweiss Financial Services Limited." crumbs={[{ label: "Investors", href: "/investors" }]} />
 
       <Section>
         <div className="grid gap-6 lg:grid-cols-12">

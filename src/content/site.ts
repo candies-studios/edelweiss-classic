@@ -381,3 +381,41 @@ export const searchIndex = [
   { title: "Careers", href: "/careers", keywords: "jobs apply culture" },
   { title: "Contact Us", href: "/contact", keywords: "address office phone email" },
 ];
+
+/* ───────────────────────── Group structure ───────────────────────── */
+
+/**
+ * Seven independent businesses (company boilerplate, June 2026),
+ * grouped under the four areas used on edelweissfin.com.
+ */
+export const groupStructure: { area: string; slug: string; units: { name: string; href: string }[] }[] = [
+  {
+    area: "Credit",
+    slug: "credit",
+    units: [
+      { name: "NBFC", href: "/businesses/credit" },
+      { name: "Housing Finance", href: "https://www.nidohomefin.com/" },
+    ],
+  },
+  {
+    area: "Asset Management",
+    slug: "asset-management",
+    units: [
+      { name: "Alternative Asset Management", href: `${OFFICIAL}/alternative-asset-advisory` },
+      { name: "Mutual Fund", href: "https://www.edelweissmf.com/" },
+    ],
+  },
+  {
+    area: "Asset Reconstruction",
+    slug: "asset-reconstruction",
+    units: [{ name: "Asset Reconstruction", href: "http://www.edelweissarc.in/home.aspx" }],
+  },
+  {
+    area: "Insurance",
+    slug: "insurance",
+    units: [
+      { name: "Life Insurance", href: "https://www.edelweisslife.in/" },
+      { name: "General Insurance", href: "https://www.hizuno.com/" },
+    ],
+  },
+];

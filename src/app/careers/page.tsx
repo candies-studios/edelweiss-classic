@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { careers, company } from "@/content/site";
 import { PageHero, Section, SectionHeader } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function Careers() {
   return (
     <>
-      <PageHero eyebrow="Careers" title="Build your future with Edelweiss" intro="Varied businesses and roles, room to grow personally and professionally, and the freedom to lead." crumbs={[{ label: "Careers", href: "/careers" }]} />
+      <PageHero image={heroImages.careers} eyebrow="Careers" title="Build your future with Edelweiss" intro="Varied businesses and roles, room to grow personally and professionally, and the freedom to lead." crumbs={[{ label: "Careers", href: "/careers" }]} />
 
       <Section>
         <SectionHeader eyebrow="Our culture" title="Where people grow" />

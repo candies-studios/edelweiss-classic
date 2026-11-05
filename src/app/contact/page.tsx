@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { businesses, contacts, offices } from "@/content/site";
 import { PageHero, Section, SmartLink } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <>
-      <PageHero eyebrow="Contact us" title="Get in touch" intro="Our offices and the right contact for investors, customers, media and careers." crumbs={[{ label: "Contact", href: "/contact" }]} />
+      <PageHero image={heroImages.contact} eyebrow="Contact us" title="Get in touch" intro="Our offices and the right contact for investors, customers, media and careers." crumbs={[{ label: "Contact", href: "/contact" }]} />
 
       <Section>
         <h2 className="font-display text-display-md text-navy">Offices</h2>

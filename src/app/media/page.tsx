@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { company, news } from "@/content/site";
 import { ArrowLink, PageHero, Section } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Media and News",
@@ -15,7 +16,7 @@ export default function Media() {
   const coverage = news.filter((n) => n.kind === "In the news");
   return (
     <>
-      <PageHero eyebrow="Media" title="News, releases and insights" intro="Official announcements and perspectives from Edelweiss leadership in the press." crumbs={[{ label: "Media", href: "/media" }]} />
+      <PageHero image={heroImages.media} eyebrow="Media" title="News, releases and insights" intro="Official announcements and perspectives from Edelweiss leadership in the press." crumbs={[{ label: "Media", href: "/media" }]} />
 
       <Section>
         <h2 className="font-display text-display-md text-navy">Press releases</h2>

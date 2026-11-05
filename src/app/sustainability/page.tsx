@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { investorDocs, irLinks, policies } from "@/content/site";
 import { DocLibrary } from "@/components/investors/DocLibrary";
 import { ArrowLink, PageHero, Section, SectionHeader } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Sustainability",
@@ -13,7 +14,7 @@ export default function Sustainability() {
   const es = policies.filter((p) => p.group === "Environment & social");
   return (
     <>
-      <PageHero eyebrow="Sustainability and responsibility" title="Governance, sustainability and responsible growth" intro="We treat these as the foundation of our business, and commit to acting with transparency, fairness and accountability." crumbs={[{ label: "Sustainability", href: "/sustainability" }]} />
+      <PageHero image={heroImages.sustainability} eyebrow="Sustainability and responsibility" title="Governance, sustainability and responsible growth" intro="We treat these as the foundation of our business, and commit to acting with transparency, fairness and accountability." crumbs={[{ label: "Sustainability", href: "/sustainability" }]} />
 
       <Section>
         <div className="grid gap-px border border-silver-300 bg-silver-300 md:grid-cols-3">

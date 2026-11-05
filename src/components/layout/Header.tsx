@@ -3,25 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { company, nav, searchIndex } from "@/content/site";
+import { nav, searchIndex } from "@/content/site";
 import { Logo } from "@/components/Logo";
-import { Jaali } from "@/components/Jaali";
 import { External } from "@/components/ui";
 import { MarketTicker } from "@/components/market/MarketTicker";
 
-const quickLinks = [
-  { label: "Our Businesses", href: "/businesses" },
-  { label: "Investors", href: "/investors" },
-  { label: "Insights", href: "/media#insights" },
-  { label: "About", href: "/about" },
-  { label: "Careers", href: "/careers" },
-];
-
-function MenuLink({ href, external, className, children, onClick }: { href: string; external?: boolean; className?: string; children: React.ReactNode; onClick?: () => void }) {
+function NavLink({ href, external, className, children, onClick }: { href: string; external?: boolean; className?: string; children: React.ReactNode; onClick?: () => void }) {
   if (external || href.startsWith("http"))
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={className} onClick={onClick}>
-        {children} <External className="ml-1 inline opacity-50" />
+        {children} <External className="ml-1 inline opacity-60" />
       </a>
     );
   return (
@@ -42,37 +33,32 @@ function SearchDialog({ open, onClose }: { open: boolean; onClose: () => void })
   }, [open, onClose]);
   if (!open) return null;
   const term = q.trim().toLowerCase().slice(0, 80);
-  const results = term ? searchIndex.filter((r) => `${r.title} ${r.keywords}`.toLowerCase().includes(term)) : searchIndex.slice(0, 7);
+  const results = term ? searchIndex.filter((r) => `${r.title} ${r.keywords}`.toLowerCase().includes(term)) : searchIndex.slice(0, 6);
   return (
-    <div className="fixed inset-0 z-[70] bg-white" role="dialog" aria-modal="true" aria-label="Search the site">
-      <div className="container flex h-[84px] items-center justify-end">
-        <button onClick={onClose} className="flex items-center gap-3 text-[15px] font-medium" aria-label="Close search">
-          Close
-          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4 4 16" stroke="currentColor" strokeWidth="1.4" /></svg>
-        </button>
-      </div>
-      <div className="container max-w-4xl pt-10">
-        <label htmlFor="site-search" className="eyebrow">Search Edelweiss</label>
-        <input
-          id="site-search"
-          ref={input}
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          maxLength={80}
-          placeholder="Businesses, reports, careers…"
-          className="mt-4 w-full border-b border-ink bg-transparent pb-4 font-display text-[clamp(28px,4vw,44px)] outline-none placeholder:text-silver"
-        />
-        <ul className="mt-8">
-          {results.length === 0 && <li className="py-3 text-ink-soft">No pages match “{q}”. Try a business name or “annual report”.</li>}
-          {results.map((r) => (
-            <li key={r.href} className="border-b border-silver-300">
-              <Link href={r.href} onClick={onClose} className="flex items-center justify-between py-4 text-[17px] hover:text-blue">
-                {r.title}
-                <span aria-hidden="true">→</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+    <div className="fixed inset-0 z-[60] bg-navy-900/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Search the site" onClick={onClose}>
+      <div className="container pt-24" onClick={(e) => e.stopPropagation()}>
+        <div className="mx-auto max-w-2xl bg-white shadow-2xl">
+          <label htmlFor="site-search" className="sr-only">Search</label>
+          <input
+            id="site-search"
+            ref={input}
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            maxLength={80}
+            placeholder="Search businesses, investor documents, careers…"
+            className="w-full border-b border-silver-300 px-6 py-5 text-[18px] outline-none placeholder:text-ink-faint"
+          />
+          <ul className="max-h-[50vh] overflow-auto py-2">
+            {results.length === 0 && <li className="px-6 py-4 text-ink-soft">No pages match “{q}”. Try a business name or “annual report”.</li>}
+            {results.map((r) => (
+              <li key={r.href}>
+                <Link href={r.href} onClick={onClose} className="block px-6 py-3 text-[15.5px] text-navy hover:bg-mist focus:bg-mist">
+                  {r.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
@@ -80,13 +66,15 @@ function SearchDialog({ open, onClose }: { open: boolean; onClose: () => void })
 
 export function Header() {
   const pathname = usePathname();
-  const [menu, setMenu] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [mobile, setMobile] = useState(false);
+  const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [search, setSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    setMenu(false);
-    setSearch(false);
+    setOpenMenu(null);
+    setMobile(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -97,107 +85,156 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menu || search ? "hidden" : "";
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenu(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [menu, search]);
+    document.body.style.overflow = mobile ? "hidden" : "";
+  }, [mobile]);
 
   return (
     <>
-      <a href="#main" className="sr-only z-[80] bg-white px-4 py-2 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+      <a href="#main" className="sr-only z-[70] bg-white px-4 py-2 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
         Skip to content
       </a>
-      <header className={`sticky top-0 z-50 bg-white transition-shadow duration-300 ${scrolled ? "shadow-[0_1px_0_#DEDCD7]" : ""}`}>
-        <div className="container flex h-[84px] items-center justify-between gap-8">
+      <header className={`sticky top-0 z-50 bg-white transition-shadow ${scrolled ? "shadow-[0_1px_0_#DCE2EA,0_8px_24px_-16px_rgba(10,34,64,.25)]" : "shadow-[0_1px_0_#E9EDF2]"}`}>
+        <div className="container flex h-[72px] items-center justify-between gap-6" onMouseLeave={() => setOpenMenu(null)}>
           <Link href="/" aria-label="Edelweiss home" className="shrink-0">
             <Logo />
           </Link>
 
-          <nav aria-label="Primary" className="hidden xl:block">
-            <ul className="flex items-center gap-9">
-              {quickLinks.map((l) => {
-                const base = l.href.split("#")[0];
-                const active = !l.href.includes("#") && (pathname === base || pathname.startsWith(`${base}/`));
+          <nav aria-label="Primary" className="hidden h-full lg:block">
+            <ul className="flex h-full items-center gap-1">
+              {nav.map((item) => {
+                const base = item.href.split("#")[0];
+                const active = !item.href.includes("#") && (pathname === base || pathname.startsWith(`${base}/`));
                 return (
-                  <li key={l.label}>
-                    <Link
-                      href={l.href}
-                      className={`relative py-2 text-[15px] transition-colors hover:text-blue after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-current after:transition-transform after:duration-300 ${active ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100"}`}
-                    >
-                      {l.label}
-                    </Link>
+                  <li key={item.label} className="h-full" onMouseEnter={() => setOpenMenu(item.columns ? item.label : null)}>
+                    {item.columns ? (
+                      <button
+                        className={`flex h-full items-center gap-1.5 px-3.5 text-[14.5px] font-medium transition-colors hover:text-blue ${active ? "text-blue" : "text-navy"}`}
+                        aria-expanded={openMenu === item.label}
+                        aria-controls={`menu-${item.label}`}
+                        onClick={() => setOpenMenu(openMenu === item.label ? null : item.label)}
+                      >
+                        {item.label}
+                        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" className={`transition-transform ${openMenu === item.label ? "rotate-180" : ""}`}>
+                          <path d="M1.5 3.5 5 7l3.5-3.5" stroke="currentColor" strokeWidth="1.4" fill="none" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <NavLink href={item.href} className={`flex h-full items-center px-3.5 text-[14.5px] font-medium transition-colors hover:text-blue ${active ? "text-blue" : "text-navy"}`}>
+                        {item.label}
+                      </NavLink>
+                    )}
                   </li>
                 );
               })}
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2">
-            <button onClick={() => setSearch(true)} className="grid h-11 w-11 place-items-center transition-colors hover:text-blue" aria-label="Search">
-              <svg width="19" height="19" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <circle cx="8.5" cy="8.5" r="6.2" stroke="currentColor" strokeWidth="1.4" />
-                <path d="m13.2 13.2 5 5" stroke="currentColor" strokeWidth="1.4" />
+          <div className="flex items-center gap-1">
+            <button onClick={() => setSearch(true)} className="grid h-11 w-11 place-items-center text-navy transition-colors hover:text-blue" aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="8.5" cy="8.5" r="6" stroke="currentColor" strokeWidth="1.7" />
+                <path d="m13 13 5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
               </svg>
             </button>
-            <button onClick={() => setMenu(true)} className="flex h-11 items-center gap-3 pl-2 text-[15px] font-medium" aria-expanded={menu} aria-controls="site-menu">
-              <span className="hidden sm:inline">Menu</span>
-              <svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><path d="M0 1h26M8 11h18" stroke="currentColor" strokeWidth="1.4" /></svg>
-              <span className="sr-only sm:hidden">Open menu</span>
+            <button onClick={() => setMobile(true)} className="grid h-11 w-11 place-items-center text-navy lg:hidden" aria-label="Open menu" aria-expanded={mobile}>
+              <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+                <path d="M3 7h16M3 15h16" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+              </svg>
             </button>
           </div>
+
+          {/* Desktop mega menu */}
+          {nav.map(
+            (item) =>
+              item.columns && (
+                <div
+                  key={item.label}
+                  id={`menu-${item.label}`}
+                  className={`absolute inset-x-0 top-[72px] hidden border-t border-silver-200 bg-white shadow-[0_24px_40px_-24px_rgba(10,34,64,.35)] lg:block ${openMenu === item.label ? "visible opacity-100" : "invisible opacity-0"} transition-opacity duration-200`}
+                >
+                  <div className="container grid grid-cols-12 gap-10 py-10">
+                    <div className="col-span-3 border-r border-silver-200 pr-8">
+                      <p className="font-display text-[26px] leading-tight text-navy">{item.label}</p>
+                      <Link href={item.href} className="link-arrow mt-4 text-[14px]">
+                        Overview
+                      </Link>
+                    </div>
+                    <div className={`col-span-9 grid gap-8 ${item.columns.length > 2 ? "grid-cols-4" : "grid-cols-2"}`}>
+                      {item.columns.map((col) => (
+                        <div key={col.title}>
+                          <p className="mb-3 text-[12.5px] font-semibold text-ink-faint">{col.title}</p>
+                          <ul className="space-y-2.5">
+                            {col.items.map((l) => (
+                              <li key={l.label}>
+                                <NavLink href={l.href} external={l.external} className="group block text-[15px] font-medium text-navy hover:text-blue">
+                                  {l.label}
+                                  {l.description && <span className="mt-0.5 block text-[13px] font-normal text-ink-soft">{l.description}</span>}
+                                </NavLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ),
+          )}
         </div>
         <MarketTicker />
       </header>
 
-      {/* Full-screen menu */}
-      <div
-        id="site-menu"
-        className={`fixed inset-0 z-[60] overflow-y-auto bg-white transition-[opacity,visibility] duration-300 ${menu ? "visible opacity-100" : "invisible opacity-0"}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Site menu"
-      >
-        <Jaali className="pointer-events-none absolute bottom-0 left-0 hidden h-[34%] w-full lg:block" opacity={0.18} fade="bottom" id="menu-jaali" />
-        <div className="container flex h-[84px] items-center justify-between">
-          <Logo />
-          <button onClick={() => setMenu(false)} className="flex items-center gap-3 text-[15px] font-medium" aria-label="Close menu">
-            Close
-            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4 4 16" stroke="currentColor" strokeWidth="1.4" /></svg>
+      {/* Mobile full-screen menu */}
+      <div className={`fixed inset-0 z-[55] flex flex-col bg-navy text-white transition-opacity duration-300 lg:hidden ${mobile ? "visible opacity-100" : "invisible opacity-0"}`} role="dialog" aria-modal="true" aria-label="Menu">
+        <div className="container flex h-[72px] items-center justify-between">
+          <Logo variant="light" />
+          <button onClick={() => setMobile(false)} className="grid h-11 w-11 place-items-center" aria-label="Close menu">
+            <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+              <path d="M5 5l12 12M17 5 5 17" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+            </svg>
           </button>
         </div>
-        <nav aria-label="Site" className="container relative grid gap-12 pb-20 pt-10 lg:grid-cols-12">
-          <ul className="space-y-1 lg:col-span-5">
-            {nav.map((g) => (
-              <li key={g.label}>
-                <MenuLink href={g.href} className="block py-1.5 font-display text-[clamp(30px,3.6vw,46px)] leading-tight transition-colors hover:text-blue" onClick={() => setMenu(false)}>
-                  {g.label}
-                </MenuLink>
+        <nav aria-label="Mobile" className="container flex-1 overflow-y-auto pb-12 pt-4">
+          <ul className="divide-y divide-white/10 border-y border-white/10">
+            {nav.map((item) => (
+              <li key={item.label}>
+                {item.columns ? (
+                  <>
+                    <button
+                      className="flex w-full items-center justify-between py-5 text-left font-display text-[26px]"
+                      aria-expanded={mobileSection === item.label}
+                      onClick={() => setMobileSection(mobileSection === item.label ? null : item.label)}
+                    >
+                      {item.label}
+                      <span className="text-[22px] text-glacier" aria-hidden="true">{mobileSection === item.label ? "−" : "+"}</span>
+                    </button>
+                    {mobileSection === item.label && (
+                      <div className="space-y-5 pb-6">
+                        {item.columns.map((col) => (
+                          <div key={col.title}>
+                            <p className="mb-2 text-[12.5px] font-semibold text-glacier">{col.title}</p>
+                            <ul className="space-y-2">
+                              {col.items.map((l) => (
+                                <li key={l.label}>
+                                  <NavLink href={l.href} external={l.external} className="text-[16px] text-silver hover:text-white" onClick={() => setMobile(false)}>
+                                    {l.label}
+                                  </NavLink>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <NavLink href={item.href} className="block py-5 font-display text-[26px]" onClick={() => setMobile(false)}>
+                    {item.label}
+                  </NavLink>
+                )}
               </li>
             ))}
           </ul>
-          <div className="grid gap-10 sm:grid-cols-2 lg:col-span-6 lg:col-start-7 lg:grid-cols-3">
-            {nav
-              .filter((g) => g.columns)
-              .flatMap((g) => g.columns!)
-              .map((col) => (
-                <div key={col.title}>
-                  <p className="mb-3 border-b border-silver-300 pb-2 text-[13px] text-ink-faint">{col.title}</p>
-                  <ul className="space-y-2">
-                    {col.items.map((l) => (
-                      <li key={l.label}>
-                        <MenuLink href={l.href} external={l.external} className="text-[15px] hover:text-blue" onClick={() => setMenu(false)}>
-                          {l.label}
-                        </MenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-          </div>
-          <p className="text-[13px] text-ink-faint lg:col-span-12">
-            NSE: {company.listings[0].code} · BSE: {company.listings[1].code}
-          </p>
         </nav>
       </div>
 

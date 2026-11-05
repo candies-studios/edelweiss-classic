@@ -15,8 +15,8 @@ function Quote({ q, flash }: { q: IndexQuote; flash: "up" | "down" | null }) {
   const up = q.change >= 0;
   return (
     <div className="flex items-baseline gap-3 whitespace-nowrap" aria-label={`${q.name} on ${q.exchange}`}>
-      <span className="text-[11px] font-medium text-ink-faint">{q.exchange}</span>
-      <span className="text-[13px] font-medium text-ink">{q.name}</span>
+      <span className="text-[11px] font-semibold text-ink-faint">{q.exchange}</span>
+      <span className="text-[13px] font-semibold text-ink">{q.name}</span>
       <span
         className={`tabular-nums text-[13px] font-semibold text-ink transition-colors duration-700 ${
           flash === "up" ? "!text-up" : flash === "down" ? "!text-down" : ""
@@ -33,7 +33,7 @@ function Quote({ q, flash }: { q: IndexQuote; flash: "up" | "down" | null }) {
         {nf.format(Math.abs(q.change))} ({up ? "+" : "−"}
         {Math.abs(q.changePercent).toFixed(2)}%)
       </span>
-      {q.isClose && <span className="border border-silver px-1.5 py-px text-[10px] font-medium text-ink-soft">Close</span>}
+      {q.isClose && <span className="border border-silver px-1.5 py-px text-[10px] font-semibold text-ink-soft">Close</span>}
     </div>
   );
 }
@@ -107,7 +107,7 @@ export function MarketTicker() {
 
   return (
     <div className="border-b border-silver-300 bg-mist text-ink" role="region" aria-label="Indian market indices">
-      <div className="container flex min-h-[38px] flex-wrap items-center gap-x-7 gap-y-1 py-1.5 text-[12px]">
+      <div className="container flex min-h-[40px] flex-wrap items-center gap-x-6 gap-y-1 py-1.5 text-[12px]">
         <div className="flex items-center gap-2">
           {isLive ? (
             <span className="flex items-center gap-1.5 font-semibold text-up">
@@ -119,7 +119,7 @@ export function MarketTicker() {
             </span>
           ) : null}
           {isDemo && (
-            <span className="bg-ink px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white" title="Sample values for development. Not market data.">
+            <span className="bg-blue px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-white" title="Sample values for development. Not market data.">
               DEMO DATA
             </span>
           )}

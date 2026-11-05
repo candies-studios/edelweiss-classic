@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { investorDocs, irLinks } from "@/content/site";
 import { DocLibrary } from "@/components/investors/DocLibrary";
 import { ArrowLink, PageHero, Section } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Financial Results",
@@ -13,7 +14,7 @@ export default function FinancialResults() {
   const latest = investorDocs.filter((d) => d.fy === "FY27" && d.category !== "AGM");
   return (
     <>
-      <PageHero eyebrow="Investor relations" title="Financial results" intro="Quarterly earnings updates, investor presentations and earnings calls." crumbs={[{ label: "Investors", href: "/investors" }, { label: "Financial results", href: "/investors/financial-results" }]} />
+      <PageHero image={heroImages.financialResults} eyebrow="Investor relations" title="Financial results" intro="Quarterly earnings updates, investor presentations and earnings calls." crumbs={[{ label: "Investors", href: "/investors" }, { label: "Financial results", href: "/investors/financial-results" }]} />
       <Section>
         <h2 className="font-display text-display-md text-navy">Latest quarter: Q1 FY27</h2>
         <p className="mt-2 text-ink-soft">April–June 2026</p>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { businesses, company, investorDocs, principles } from "@/content/site";
 import { Reveal } from "@/components/Reveal";
 import { Arrow, ArrowLink, PageHero, Section, SectionHeader } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "About Edelweiss",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <>
-      <PageHero eyebrow="About Edelweiss" title="A diversified financial services group, built on principles" intro={company.description} crumbs={[{ label: "About", href: "/about" }]} />
+      <PageHero image={heroImages.about} eyebrow="About Edelweiss" title="A diversified financial services group, built on principles" intro={company.description} crumbs={[{ label: "About", href: "/about" }]} />
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-12">

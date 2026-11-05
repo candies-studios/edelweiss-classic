@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { investorDocs, irLinks } from "@/content/site";
 import { DocLibrary } from "@/components/investors/DocLibrary";
 import { ArrowLink, PageHero, Section } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Annual Reports",
@@ -13,7 +14,7 @@ export default function AnnualReports() {
   const letter = investorDocs.find((d) => d.title === "Chairman's Letter FY26")!;
   return (
     <>
-      <PageHero eyebrow="Investor relations" title="Annual reports" intro="Our yearly account to shareholders, alongside the Chairman’s letter and ESG reporting." crumbs={[{ label: "Investors", href: "/investors" }, { label: "Annual reports", href: "/investors/annual-reports" }]} />
+      <PageHero image={heroImages.annualReports} eyebrow="Investor relations" title="Annual reports" intro="Our yearly account to shareholders, alongside the Chairman’s letter and ESG reporting." crumbs={[{ label: "Investors", href: "/investors" }, { label: "Annual reports", href: "/investors/annual-reports" }]} />
       <Section>
         <div className="grid items-center gap-10 bg-navy p-8 text-white md:p-14 lg:grid-cols-12">
           <div className="lg:col-span-8">

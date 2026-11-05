@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { company, irLinks, policies } from "@/content/site";
 import { ArrowLink, PageHero, Section } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Corporate Governance",
@@ -18,7 +19,7 @@ export default function Governance() {
   const groups = Array.from(new Set(policies.map((p) => p.group)));
   return (
     <>
-      <PageHero eyebrow="Investor relations" title="Corporate governance" intro="Governance practices that protect the interests of our stakeholders and the reputation of the company." crumbs={[{ label: "Investors", href: "/investors" }, { label: "Governance", href: "/investors/governance" }]} />
+      <PageHero image={heroImages.governance} eyebrow="Investor relations" title="Corporate governance" intro="Governance practices that protect the interests of our stakeholders and the reputation of the company." crumbs={[{ label: "Investors", href: "/investors" }, { label: "Governance", href: "/investors/governance" }]} />
       <Section>
         <div className="grid gap-14 lg:grid-cols-12">
           <div className="space-y-4 text-ink-soft lg:col-span-4">

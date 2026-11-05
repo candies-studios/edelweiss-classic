@@ -1,19 +1,19 @@
-# Edelweiss Financial Services — website redesign (Classic)
+# Edelweiss Financial Services — website redesign (Kinara)
 
-The **Classic** design direction for the Edelweiss website: clean, minimal and editorial, in the manner of a global investment group, with an Indian voice. Built with Next.js (App Router), React, TypeScript and Tailwind CSS.
+The **Kinara** design direction: clean, minimal and photo-led, in the manner of a global investment group, with an Indian voice. *Kinara* is the woven border of a sari; here it becomes the fine brass band that separates major sections. Built with Next.js (App Router), React, TypeScript and Tailwind CSS.
+
+> **Status:** redesign proposal. Edelweiss's name, logo and documents belong to Edelweiss Financial Services Limited. Deploy publicly only with the company's authorisation.
 
 **Design system**
 
 | | |
 | --- | --- |
-| Colour | Ink `#141414`, white, stone `#F1F0EE`; Edelweiss blue `#1D4C9C` as the single accent |
-| Type | Bodoni Moda (headlines), Hanken Grotesk (text), Tiro Devanagari Hindi (Hindi tagline) |
-| Motif | *Jaali* — the carved lattice of Indian architecture — drawn as a hairline SVG pattern (`components/Jaali.tsx`), framed in an arch on the homepage (`components/home/ArchJaali.tsx`) |
-| Layout | Generous whitespace, ruled editorial lists, full-screen menu, monochrome ticker |
+| Colour | Warm ink `#1C1915`, sandstone `#F3EFE9`, white; Indian indigo `#2E3B6E` accent; brass `#A8834F` for hairlines only |
+| Type | Marcellus (headlines), Manrope (text), Noto Serif Devanagari (Hindi tagline) |
+| Imagery | Full-bleed photography with a warm-ink scrim; every inner page has a photo hero (`src/assets/heroes/`, mapped in `src/content/heroes.ts`) |
+| Motif | Kinara border (`src/components/Kinara.tsx`) under heroes and above the footer |
 
-Content, investor documents and the market-data service are identical to the first design; only the presentation differs.
-
-> **Status:** redesign proposal. Edelweiss's name, logo and documents belong to Edelweiss Financial Services Limited. Deploy publicly only with the company's authorisation.
+Content, investor documents and the market-data service are identical to the other designs; only the presentation differs.
 
 ## Quick start
 

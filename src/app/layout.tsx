@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-export const viewport: Viewport = { themeColor: "#ffffff", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#1C1915", width: "device-width", initialScale: 1 };
 
 const orgJsonLd = {
   "@context": "https://schema.org",
@@ -42,13 +42,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Hanken+Grotesk:wght@400;500;600&family=Tiro+Devanagari+Hindi&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400&display=swap"
         />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </head>
       <body>
         {process.env.NEXT_PUBLIC_CONCEPT_BANNER === "true" && (
-          <p className="bg-ink px-4 py-1.5 text-center text-[12px] text-silver">
+          <p className="bg-navy-900 px-4 py-1.5 text-center text-[12px] text-silver">
             Redesign concept for review. This is not the official Edelweiss website — visit{" "}
             <a href="https://www.edelweissfin.com" className="text-white underline">edelweissfin.com</a>.
           </p>

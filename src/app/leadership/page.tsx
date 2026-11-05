@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { irLinks, leadership } from "@/content/site";
 import { ArrowLink, PageHero, Section } from "@/components/ui";
+import { heroImages } from "@/content/heroes";
 
 export const metadata: Metadata = {
   title: "Our Leadership",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 export default function Leadership() {
   return (
     <>
-      <PageHero eyebrow="Our leadership" title="Board of Directors" intro="Experienced leaders from financial services, economics, banking and public service." crumbs={[{ label: "About", href: "/about" }, { label: "Leadership", href: "/leadership" }]} />
+      <PageHero image={heroImages.leadership} eyebrow="Our leadership" title="Board of Directors" intro="Experienced leaders from financial services, economics, banking and public service." crumbs={[{ label: "About", href: "/about" }, { label: "Leadership", href: "/leadership" }]} />
       <Section>
         <ul className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {leadership.map((p) => (
