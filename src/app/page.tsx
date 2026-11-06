@@ -45,14 +45,6 @@ export default function Home() {
             <Link href="/businesses" className="btn-light">Explore our businesses</Link>
             <Link href="/about" className="btn-outline-light">Discover Edelweiss</Link>
           </div>
-          <nav aria-label="Businesses" className="mt-14 grid grid-cols-2 border-t border-white/25 md:grid-cols-4">
-            {businesses.map((b) => (
-              <Link key={b.slug} href={`/businesses/${b.slug}`} className="group flex items-center justify-between gap-3 py-5 pr-6 text-[15px] text-white/80 transition-colors hover:text-white">
-                {b.name}
-                <Arrow className="opacity-50 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
-              </Link>
-            ))}
-          </nav>
         </div>
         <Kinara tone="light" className="relative opacity-80" id="home-hero-kinara" />
       </section>
@@ -76,6 +68,18 @@ export default function Home() {
               </div>
             ))}
           </dl>
+          <nav aria-label="Our businesses" className="mt-6 grid grid-cols-2 border border-silver-300 bg-white md:grid-cols-4">
+            {businesses.map((b) => (
+              <Link
+                key={b.slug}
+                href={`/businesses/${b.slug}`}
+                className="group flex min-h-[64px] items-center justify-between gap-3 border-silver-300 px-5 py-5 text-[15px] font-medium text-ink transition-colors hover:bg-mist hover:text-blue sm:px-8 max-md:even:border-l max-md:[&:nth-child(n+3)]:border-t md:[&:not(:first-child)]:border-l"
+              >
+                {b.name}
+                <Arrow className="shrink-0 text-brass transition-transform group-hover:translate-x-1" />
+              </Link>
+            ))}
+          </nav>
           <div className="mt-5 flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
             <p className="text-[12.5px] text-ink-faint">Figures as published by Edelweiss on edelweissfin.com. Life insurance branches as of March 2024.</p>
             <ArrowLink href="/investors">Investor relations</ArrowLink>
