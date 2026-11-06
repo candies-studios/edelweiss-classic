@@ -14,9 +14,10 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Edelweiss Financial Services",
     locale: "en_IN",
-    images: [{ url: "https://cdn1.edelweissfin.com/wp-content/uploads/2020/02/credit-1-1.jpg" }],
+    // Link-preview image (WhatsApp, LinkedIn, X, Slack…): the homepage hero photograph, 1200×630.
+    images: [{ url: "/og-home.jpg", width: 1200, height: 630, alt: "Glass office towers at sunrise" }],
   },
-  twitter: { card: "summary_large_image", site: "@EdelweissFin" },
+  twitter: { card: "summary_large_image", site: "@EdelweissFin", images: ["/og-home.jpg"] },
   alternates: { canonical: "/" },
 };
 
