@@ -68,15 +68,11 @@ export default function Home() {
               </div>
             ))}
           </dl>
-          <nav aria-label="Our businesses" className="mt-6 grid grid-cols-2 border border-silver-300 bg-white md:grid-cols-4">
+          <nav aria-label="Our businesses" className="mt-10 grid grid-cols-2 border-t border-ink/20 md:grid-cols-4">
             {businesses.map((b) => (
-              <Link
-                key={b.slug}
-                href={`/businesses/${b.slug}`}
-                className="group flex min-h-[64px] items-center justify-between gap-3 border-silver-300 px-5 py-5 text-[15px] font-medium text-ink transition-colors hover:bg-mist hover:text-blue sm:px-8 max-md:even:border-l max-md:[&:nth-child(n+3)]:border-t md:[&:not(:first-child)]:border-l"
-              >
+              <Link key={b.slug} href={`/businesses/${b.slug}`} className="group flex items-center justify-between gap-3 py-5 pr-6 text-[15px] text-ink-soft transition-colors hover:text-ink">
                 {b.name}
-                <Arrow className="shrink-0 text-brass transition-transform group-hover:translate-x-1" />
+                <Arrow className="opacity-50 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
               </Link>
             ))}
           </nav>
