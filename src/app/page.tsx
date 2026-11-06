@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { businesses, careers, company, investorDocs, irLinks, leadership, news } from "@/content/site";
 import { heroImages } from "@/content/heroes";
-import heroImage from "@/assets/hero-global-network.jpg";
+import heroImage from "@/assets/hero-skyline.jpg";
+import { CountUp } from "@/components/home/CountUp";
 import { Kinara } from "@/components/Kinara";
 import { Reveal } from "@/components/Reveal";
 import { Arrow, ArrowLink, External, SectionHeader, SmartLink } from "@/components/ui";
@@ -11,10 +12,10 @@ const dateFmt = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long"
 
 /** Figures published by the company on edelweissfin.com (sources in content/site.ts). */
 const glance = [
-  { value: "7", label: "Independent businesses, each with its own board" },
+  { value: "7", label: "Independent businesses" },
   { value: "$10 bn+", label: "Customer assets in asset management" },
   { value: "850+", label: "Talukas reached by Nido Home Finance" },
-  { value: "70+", label: "Bank and FI relationships in asset reconstruction" },
+  { value: "109", label: "Life insurance branches in 88 cities" },
 ];
 
 export default function Home() {
@@ -23,24 +24,26 @@ export default function Home() {
 
   return (
     <>
-      {/* ───────── Hero: full-bleed photograph ───────── */}
+      {/* ───────── Hero: full-bleed photograph (same treatment as inner-page heroes) ───────── */}
       <section className="relative overflow-hidden bg-navy text-white">
-        <Image src={heroImage} alt="" fill priority placeholder="blur" sizes="100vw" className="object-cover object-center motion-safe:animate-settle" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/15" aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/70 via-navy/20 to-transparent" aria-hidden="true" />
-        <div className="container relative flex min-h-[min(86vh,780px)] flex-col justify-end pb-12 pt-24">
-          <p className="mb-6 text-[14px] font-semibold text-glacier">Edelweiss Financial Services</p>
-          <h1 className="max-w-5xl font-display text-display-2xl">Building financial futures. Creating lasting value.</h1>
-          <div className="mt-10 grid gap-8 md:grid-cols-12 md:items-end">
-            <div className="md:col-span-6">
-              <p className="max-w-xl text-[18px] leading-relaxed text-glacier">
-                Edelweiss brings together financial expertise, innovation and a diversified ecosystem of solutions to help individuals and businesses move forward with confidence.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3 md:col-span-6 md:justify-end">
-              <Link href="/businesses" className="btn-light">Explore our businesses</Link>
-              <Link href="/about" className="btn-outline-light">Discover Edelweiss</Link>
-            </div>
+        <Image src={heroImage} alt="" fill priority placeholder="blur" sizes="100vw" className="object-cover object-[65%_center] motion-safe:animate-settle" />
+        {/* Warm-ink scrim: deepest at the bottom-left where the text sits */}
+        <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/45 to-navy/10" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/70 via-navy/25 to-transparent" aria-hidden="true" />
+        <div className="container relative flex min-h-[min(90vh,840px)] flex-col justify-end pb-28 pt-24 md:pb-32">
+          <span aria-hidden="true" className="mb-8 block h-px w-14 bg-glacier" />
+          <p className="mb-5 text-[13.5px] font-semibold text-glacier">{company.tagline}</p>
+          <h1 className="max-w-4xl font-display text-display-2xl">
+            Building financial futures.
+            <br />
+            Creating lasting value.
+          </h1>
+          <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-glacier">
+            Edelweiss brings together financial expertise, innovation and a diversified ecosystem of solutions to help individuals and businesses move forward with confidence.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Link href="/businesses" className="btn-light">Explore our businesses</Link>
+            <Link href="/about" className="btn-outline-light">Discover Edelweiss</Link>
           </div>
           <nav aria-label="Businesses" className="mt-14 grid grid-cols-2 border-t border-white/25 md:grid-cols-4">
             {businesses.map((b) => (
@@ -51,7 +54,33 @@ export default function Home() {
             ))}
           </nav>
         </div>
-        <Kinara tone="light" className="relative opacity-70" id="home-hero-kinara" />
+        <Kinara tone="light" className="relative opacity-80" id="home-hero-kinara" />
+      </section>
+
+      {/* ───────── At a glance: card overlapping the hero's lower edge ───────── */}
+      <section aria-label="Edelweiss at a glance" className="relative z-10">
+        <noscript>
+          <style>{".countup-anim{display:none}.countup-final{display:block!important}"}</style>
+        </noscript>
+        <div className="container -mt-20 md:-mt-24">
+          <dl className="grid grid-cols-2 border border-silver-300 border-t-[3px] border-t-brass bg-white shadow-[0_24px_48px_-24px_rgba(28,25,21,0.45)] lg:grid-cols-4">
+            {glance.map((g, i) => (
+              <div
+                key={g.label}
+                className="flex min-w-0 flex-col border-silver-300 px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-11 max-lg:even:border-l max-lg:[&:nth-child(n+3)]:border-t lg:[&:not(:first-child)]:border-l"
+              >
+                <dt className="mt-4 text-[14px] leading-snug text-ink-soft sm:text-[15px]">{g.label}</dt>
+                <dd className="order-first font-display text-[clamp(40px,4.4vw,60px)] leading-none text-blue lining-nums">
+                  <CountUp value={g.value} delay={i * 150} suffixClassName="ml-[0.04em] text-[0.55em]" />
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
+            <p className="text-[12.5px] text-ink-faint">Figures as published by Edelweiss on edelweissfin.com. Life insurance branches as of March 2024.</p>
+            <ArrowLink href="/investors">Investor relations</ArrowLink>
+          </div>
+        </div>
       </section>
 
       {/* ───────── Statement ───────── */}
@@ -103,21 +132,6 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ───────── At a glance ───────── */}
-      <section className="bg-mist py-20 md:py-24">
-        <div className="container">
-          <dl className="grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {glance.map((g, i) => (
-              <div key={g.label} className={`pr-8 ${i > 0 ? "lg:border-l lg:border-brass/40 lg:pl-8" : ""}`}>
-                <dd className="font-display text-[clamp(44px,4.6vw,62px)] leading-none text-blue">{g.value}</dd>
-                <dt className="mt-4 max-w-[15rem] text-[15px] text-ink-soft">{g.label}</dt>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-12 text-[12px] text-ink-faint">Figures as published by Edelweiss on edelweissfin.com.</p>
         </div>
       </section>
 
